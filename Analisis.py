@@ -4,7 +4,6 @@ import seaborn as sns
 import json
 import os
 
-# Funcion para identificar variables categoricas y numericas de un csv
 def classify_variable(series):
     if series.dtype == 'object':
         return "Cualitativa (Categórica)"
@@ -16,55 +15,51 @@ def classify_variable(series):
     else:
         return "Tipo no reconocido"
 
-def print_var(df):
-    variable_types = {col: classify_variable(df[col]) for col in df.columns}
-    
-    for var, tipo in variable_types.items():
-        print(f"{var}: {tipo}")
+def get_var_types(df):
+    return {col: classify_variable(df[col]) for col in df.columns}
 
-# Funcion para imprimir el nombre de las variables
-def print_var_name(df):
-    for col in df.columns:
-        print(col)
+def get_var_names(df):
+    return df.columns.tolist()
 
-# Funcion para imprimir los valores nulos
-def print_null_values(df):
-    print(df.isnull().sum())
+def get_null_values(df):
+    return df.isnull().sum().to_dict()
 
-# Funcion para imprimir la media, mediana, moda, desviación estándar de variables numericas
-def print_stats(df):
+def get_stats(df):
+    stats = {}
     for col in df.columns:
         if df[col].dtype in ['int64', 'float64']:
-            print(f"{col}:")
-            print(f"Media: {df[col].mean()}")
-            print(f"Mediana: {df[col].median()}")
-            print(f"Moda: {df[col].mode().values}")
-            print(f"Desviación estándar: {df[col].std()}")
-            print()
+            stats[col] = {
+                "Media": df[col].mean(),
+                "Mediana": df[col].median(),
+                "Moda": df[col].mode().values.tolist(),
+                "Desviación estándar": df[col].std()
+            }
+    return stats
 
-# Funcion para guardar el analisis en un archivo json
 def save_analysis_to_json(df, folder='analisis_exploratorio', filename='analisis.json'):
     if not os.path.exists(folder):
         os.makedirs(folder)
         
     analysis = {
-        "Tipos de variables": print_var(df),
-        "Nombres de variables": print_var_name(df),
-        "Valores nulos": print_null_values(df),
-        "Estadísticas": print_stats(df)
+        "Tipos de variables": get_var_types(df),
+        "Nombres de variables": get_var_names(df),
+        "Valores nulos": get_null_values(df),
+        "Estadísticas": get_stats(df)
     }
     
     filepath = os.path.join(folder, filename)
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(analysis, f, ensure_ascii=False, indent=4)
 
-# Funcion donde se seleccionen dos variables y sugerir graficos
 def suggest_plots(df):
     if not os.path.exists('graficos'):
         os.makedirs('graficos')
         
     print("Variables disponibles:")
-    print_var_name(df)
+    var_names = get_var_names(df)
+    for col in var_names:
+        print(col)
+        
     var1 = input("Ingrese el nombre de la primera variable: ")
     var2 = input("Ingrese el nombre de la segunda variable: ")
     

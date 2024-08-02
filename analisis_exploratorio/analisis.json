@@ -1,6 +1,54 @@
 {
-    "Tipos de variables": null,
-    "Nombres de variables": null,
-    "Valores nulos": null,
-    "Estadísticas": null
+    "Tipos de variables": {
+        "show_id": "Cualitativa (Categórica)",
+        "type": "Cualitativa (Categórica)",
+        "title": "Cualitativa (Categórica)",
+        "director": "Cualitativa (Categórica)",
+        "cast": "Cualitativa (Categórica)",
+        "country": "Cualitativa (Categórica)",
+        "date_added": "Cualitativa (Categórica)",
+        "release_year": "Cuantitativa Discreta",
+        "rating": "Cualitativa (Categórica)",
+        "duration": "Cualitativa (Categórica)",
+        "listed_in": "Cualitativa (Categórica)",
+        "description": "Cualitativa (Categórica)"
+    },
+    "Nombres de variables": [
+        "show_id",
+        "type",
+        "title",
+        "director",
+        "cast",
+        "country",
+        "date_added",
+        "release_year",
+        "rating",
+        "duration",
+        "listed_in",
+        "description"
+    ],
+    "Valores nulos": {
+        "show_id": 0,
+        "type": 0,
+        "title": 0,
+        "director": 2634,
+        "cast": 825,
+        "country": 831,
+        "date_added": 10,
+        "release_year": 0,
+        "rating": 4,
+        "duration": 3,
+        "listed_in": 0,
+        "description": 0
+    },
+    "Estadísticas": {
+        "release_year": {
+            "Media": 2014.1801975701146,
+            "Mediana": 2017.0,
+            "Moda": [
+                2018
+            ],
+            "Desviación estándar": 8.819312130833966
+        }
+    }
 }

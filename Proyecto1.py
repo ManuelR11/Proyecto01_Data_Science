@@ -7,16 +7,26 @@ df = pd.read_csv(name)
 
 # Imprimir las variables del archivo
 print("Variables del archivo:")
-Analisis.print_var_name(df)
+variables = Analisis.get_var_names(df)
+for var in variables:
+    print(var)
 
 print("\nTipo de variables:")
-Analisis.print_var(df)
+tipos_var = Analisis.get_var_types(df)
+for var, tipo in tipos_var.items():
+    print(f"{var}: {tipo}")
 
 print("\nValores nulos:")
-Analisis.print_null_values(df)
+nulos = Analisis.get_null_values(df)
+for var, nulo in nulos.items():
+    print(f"{var}: {nulo}")
 
 print("\nEstadísticas de variables numéricas:")
-Analisis.print_stats(df)
+estadisticas = Analisis.get_stats(df)
+for var, stats in estadisticas.items():
+    print(f"{var}:")
+    for stat, value in stats.items():
+        print(f"{stat}: {value}")
 
 print("\nSugerencias de gráficos:")
 Analisis.suggest_plots(df)
