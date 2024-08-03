@@ -2,6 +2,8 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import Analisis as an
+import math 
+import warnings
 
 def suggest_plots(df):
     if not os.path.exists('graficos'):
@@ -83,3 +85,55 @@ def suggest_plots(df):
         plt.title(f'Diagrama de línea de {var1} y {var2}')
         plt.savefig(os.path.join('graficos', 'diagrama_linea.png'))
         plt.show()
+
+def null_values_to_plot(df):
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
+    plt.title('Valores nulos en el conjunto de datos')
+    plt.savefig(os.path.join('graficos', 'valores_nulos.png'))
+    plt.show()
+
+
+def plot_categorical_distributions(df, threshold=0.05):
+    # Ignorar advertencias específicas
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=FutureWarning, message=".*is_categorical_dtype is deprecated.*")
+        
+        # Definir una lista para almacenar las columnas categóricas
+        categorical_columns = []
+        
+        # Determinar si una columna es categórica
+        for col in df.columns:
+            unique_ratio = df[col].nunique() / len(df)
+            if unique_ratio <= threshold:
+                categorical_columns.append(col)
+        
+        num_categorical = len(categorical_columns)
+        
+        if num_categorical == 0:
+            print("No se encontraron variables categóricas con el umbral especificado.")
+            return
+        
+        # Determinar el tamaño de la cuadrícula
+        cols = math.ceil(math.sqrt(num_categorical))
+        rows = math.ceil(num_categorical / cols)
+        
+        # Crear una figura con subplots en una cuadrícula
+        fig, axes = plt.subplots(rows, cols, figsize=(15, 10))
+        axes = axes.flatten()
+        
+        # Graficar la distribución de las variables categóricas en subplots
+        for i, col in enumerate(categorical_columns):
+            sns.countplot(data=df, x=col, palette='viridis', ax=axes[i])
+            axes[i].set_title(f'Distribución de la variable categórica: {col}')
+            axes[i].set_xticklabels(axes[i].get_xticklabels(), rotation=45)
+        
+        # Eliminar cualquier subplot no utilizado
+        for j in range(i + 1, len(axes)):
+            fig.delaxes(axes[j])
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join('graficos', 'distribucion_categorica.png'))
+        plt.show()
+        
+    return categorical_columns

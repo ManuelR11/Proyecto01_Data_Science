@@ -22,7 +22,12 @@ def get_var_names(df):
     return df.columns.tolist()
 
 def get_null_values(df):
-    return df.isnull().sum().to_dict()
+    #obtener los valores nulos de cada columna y mostrar el porcentaje de nulos
+    null_dict = {}
+    for col in df.columns:
+        null_count = df[col].isnull().sum()
+        null_dict[col] = null_count
+    return null_dict
 
 def get_stats(df):
     stats = {}
@@ -36,6 +41,39 @@ def get_stats(df):
             }
     return stats
 
+def null_percentage(df):
+    return df.isnull().mean() * 100
 
 
-
+def dataframe_summary(df):
+    # Número de variables (columnas)
+    num_variables = df.shape[1]
+    
+    # Número de observaciones (filas)
+    num_observations = df.shape[0]
+    
+    # Filas duplicadas
+    duplicate_rows = df.duplicated().sum()
+    
+    # Filas duplicadas (%)
+    duplicate_rows_percentage = (duplicate_rows / num_observations) * 100
+    
+    # Celdas faltantes
+    missing_cells = df.isnull().sum().sum()
+    
+    # Celdas faltantes (%)
+    total_cells = num_variables * num_observations
+    missing_cells_percentage = (missing_cells / total_cells) * 100
+    aprox = round(missing_cells_percentage, 2)
+    
+    
+    summary = {
+        'Numero de variables': num_variables,
+        'Numero de observaciones': num_observations,
+        'Celdas Faltantes ': missing_cells,
+        'Celdas Faltantes (%)': aprox,
+        'Filas duplicadas': duplicate_rows,
+        'Filas duplicadas (%)': duplicate_rows_percentage
+    }
+    
+    return summary
