@@ -3,11 +3,10 @@ import Analisis
 import Plots
 import Export
 
-
-
 print("Bienvenido al programa de análisis de datos.")
 print("Este programa te permitirá cargar un archivo de datos y realizar un análisis exploratorio de los mismos.")
 Salir = False 
+
 # Cargar el archivo de datos
 try:
     name = input("Ingrese el nombre del archivo de datos: \n")
@@ -15,7 +14,6 @@ try:
         
 except FileNotFoundError:
     print("El archivo no existe, por favor ingrese un archivo válido.")
-
 
 while not Salir:
     print('\n\nPor favor seleccione una de las siguientes opciones:')
@@ -38,7 +36,6 @@ while not Salir:
             Plots.plot_categorical_distributions(df)
         else:
             print("No se exportaron las variables categoricas a una grafica")
-
 
     elif opcion == 2:
         print("\n----------------Valores nulos----------------")
@@ -63,7 +60,7 @@ while not Salir:
 
     elif opcion == 4:
         print("\n-------------------Sugerencias de gráficos-------------------")
-        Analisis.suggest_plots(df)
+        Plots.suggest_plots(df)
 
     elif opcion == 5:
         summary = Analisis.dataframe_summary(df)
@@ -71,19 +68,12 @@ while not Salir:
         for key, value in summary.items():
             print(f"{key}: {value}")
 
-
     elif opcion == 6:
         Salir = True
         print("\nGracias por usar el programa.")
         print("Los que hacen el trabajo pesado son:")
         print("Jose Santisteban \nManuel Rodas \nSol")
+        Export.save_analysis_to_json(df)
 
     else:
         print("Opción no válida. Por favor seleccione una opción válida.")
-    
-
-    
-
-
-
-

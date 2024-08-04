@@ -1,4 +1,18 @@
 {
+    "Variables": [
+        "show_id",
+        "type",
+        "title",
+        "director",
+        "cast",
+        "country",
+        "date_added",
+        "release_year",
+        "rating",
+        "duration",
+        "listed_in",
+        "description"
+    ],
     "Tipos de variables": {
         "show_id": "Cualitativa (Categórica)",
         "type": "Cualitativa (Categórica)",
@@ -13,20 +27,16 @@
         "listed_in": "Cualitativa (Categórica)",
         "description": "Cualitativa (Categórica)"
     },
-    "Nombres de variables": [
-        "show_id",
-        "type",
-        "title",
-        "director",
-        "cast",
-        "country",
-        "date_added",
-        "release_year",
-        "rating",
-        "duration",
-        "listed_in",
-        "description"
-    ],
+    "Estadísticas": {
+        "release_year": {
+            "Media": 2014.1801975701146,
+            "Mediana": 2017.0,
+            "Moda": [
+                2018
+            ],
+            "Desviación estándar": 8.819312130833966
+        }
+    },
     "Valores nulos": {
         "show_id": 0,
         "type": 0,
@@ -41,14 +51,26 @@
         "listed_in": 0,
         "description": 0
     },
-    "Estadísticas": {
-        "release_year": {
-            "Media": 2014.1801975701146,
-            "Mediana": 2017.0,
-            "Moda": [
-                2018
-            ],
-            "Desviación estándar": 8.819312130833966
-        }
+    "Porcentaje de valores nulos": {
+        "show_id": 0.0,
+        "type": 0.0,
+        "title": 0.0,
+        "director": 29.908027705234474,
+        "cast": 9.367548540933349,
+        "country": 9.435676166685592,
+        "date_added": 0.11354604292040424,
+        "release_year": 0.0,
+        "rating": 0.04541841716816169,
+        "duration": 0.034063812876121265,
+        "listed_in": 0.0,
+        "description": 0.0
+    },
+    "Resumen del dataframe": {
+        "Numero de variables": 12,
+        "Numero de observaciones": 8807,
+        "Celdas Faltantes": 4307,
+        "Celdas Faltantes (%)": 4.08,
+        "Filas duplicadas": 0,
+        "Filas duplicadas (%)": 0.0
     }
 }

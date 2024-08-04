@@ -5,17 +5,28 @@ import Analisis as an
 import math 
 import warnings
 
+def filter_columns(df):
+    filtered_columns = []
+    for col in df.columns:
+        if df[col].dtype in ['int64', 'float64'] or (df[col].dtype == 'object' and df[col].nunique() < 50):
+            filtered_columns.append(col)
+    return filtered_columns
+
 def suggest_plots(df):
     if not os.path.exists('graficos'):
         os.makedirs('graficos')
         
     print("Variables disponibles:")
-    var_names = an.get_var_names(df)
-    for col in var_names:
+    filtered_columns = filter_columns(df)
+    for col in filtered_columns:
         print(col)
         
     var1 = input("Ingrese el nombre de la primera variable: ")
     var2 = input("Ingrese el nombre de la segunda variable: ")
+    
+    if var1 not in filtered_columns or var2 not in filtered_columns:
+        print("Una o ambas variables no son válidas para graficar.")
+        return
     
     suggestions = []
 
@@ -92,7 +103,6 @@ def null_values_to_plot(df):
     plt.title('Valores nulos en el conjunto de datos')
     plt.savefig(os.path.join('graficos', 'valores_nulos.png'))
     plt.show()
-
 
 def plot_categorical_distributions(df, threshold=0.05):
     # Ignorar advertencias específicas

@@ -3,16 +3,17 @@ import pandas as pd
 import os 
 import json
 
-
 def save_analysis_to_json(df, folder='analisis_exploratorio', filename='analisis.json'):
     if not os.path.exists(folder):
         os.makedirs(folder)
         
     analysis = {
+        "Variables": an.get_var_names(df),
         "Tipos de variables": an.get_var_types(df),
-        "Nombres de variables": an.get_var_names(df),
+        "Estadísticas": an.get_stats(df),
         "Valores nulos": an.get_null_values(df),
-        "Estadísticas": an.get_stats(df)
+        "Porcentaje de valores nulos": an.null_percentage(df),
+        "Resumen del dataframe": an.dataframe_summary(df)
     }
     
     filepath = os.path.join(folder, filename)
